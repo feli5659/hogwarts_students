@@ -116,13 +116,14 @@ function prepareObject(jsonObject) {
 
 function selectFilter(event) {
   const filter = event.target.dataset.filter;
-  console.log(`User selected ${filter}`);
+  console.log(`selectFilter() User selected ${filter}`);
 
   setFilter(filter);
 }
 
 function setFilter(filter) {
   settings.filterBy = filter;
+  console.log("setFilter() is running");
   buildList();
 }
 
@@ -166,7 +167,6 @@ function sortList(sortedList) {
   // this is a compare function - a function that takes two arguments and then compares them
 
   function sortByProperty(studentA, studentB) {
-    console.log(`sortBy is ${settings.sortBy}`);
     if (studentA[settings.sortBy] < studentB[settings.sortBy]) {
       return -1 * direction;
     } else {
