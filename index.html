@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://use.typekit.net/stl8ddb.css" />
     <link rel="stylesheet" href="style.css" />
+
     <title>Felicia's Hogwarts Student List</title>
   </head>
 
@@ -26,19 +27,18 @@
             <option class="filter" data-action="filter" data-filter="inqSquad">Inquisitorial squad</option>
             <option class="filter" data-action="filter" data-filter="gender">Boys</option>
             <option class="filter" data-action="filter" data-filter="gender">Girls</option>
-            <option class="filter" data-action="filter" data-filter="blood">Pure blood</option>
-            <option class="filter" data-action="filter" data-filter="blood">Half blood</option>
-            <option class="filter" data-action="filter" data-filter="blood">Muggles</option>
+            <option class="filter" data-action="filter" data-filter="pureblood">Pure blood</option>
+            <option class="filter" data-action="filter" data-filter="halfblood">Half blood</option>
+            <option class="filter" data-action="filter" data-filter="muggleborn">Muggles</option>
           </select>
         </nav>
 
-        <nav class="nav_search">
-          <div class="search_wrapper">
-            <h3>Search:</h3>
-            <input type="text" name="searchbar" id="searchbar" placeholder="Search here..." />
-          </div>
+        <nav class="search-container">
+          <input type="text" id="search-input" placeholder="Search..." />
+          <button id="search-button">Search</button>
+          <button id="reset-button" type="button">Reset</button>
         </nav>
-        <button id="togglebutton" onclick="toggleStudents()">Show expelled students</button>
+        <button id="togglebutton">Show expelled students</button>
       </div>
     </header>
     <main>
@@ -156,6 +156,7 @@
       </div>
     </div>
 
-    <script src="js.js"></script>
+    <script type="module" src="js.js"></script>
+    <script type="module" src="blood.js"></script>
   </body>
 </html>

@@ -8,6 +8,12 @@
   font-style: normal;
 }
 
+button,
+#search-input,
+#filter {
+  font-size: 1.5rem;
+}
+
 h1 {
   text-align: center;
   font-size: 3rem;
@@ -20,7 +26,7 @@ nav {
 
 .navigation {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 /* Sorting styling */

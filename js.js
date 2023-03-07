@@ -1,12 +1,15 @@
 "use strict";
 
+import { getBloodStatus } from "./blood.js";
+
 const studentDataUrl = "https://petlatkea.dk/2021/hogwarts/students.json";
+
 let allStudents = [];
 let expelledStudents = [];
 let allStudentsCopy = [];
-
-let students;
-let studentCard;
+let studentBloodStatus = [];
+let pureBloods = [];
+let halfBloods = [];
 
 document.addEventListener("DOMContentLoaded", loadPage);
 const Student = {
@@ -47,6 +50,9 @@ const filterFunctions = {
   slytherin: (studentCard) => studentCard.house === "Slytherin",
   prefect: (studentCard) => studentCard.prefect === true,
   iqsquad: (studentCard) => studentCard.iqSquad === true,
+  pureblood: (studentCard) => studentCard.blood === "Pure Blood",
+  halfblood: (studentCard) => studentCard.blood === "Half Blood",
+  muggleborn: (studentCard) => studentCard.blood === "Muggle Born",
 };
 
 // controls the sorting and filter settings
@@ -64,19 +70,13 @@ function loadPage() {
 }
 // Gives eventlisteners on all the buttons
 function registerButtons() {
-  //   document.getElementById("search-button").addEventListener("click", searchStudents);
-  //   document.getElementById("reset-button").addEventListener("click", resetStudents);
+  document.getElementById("search-button").addEventListener("click", searchStudents);
+  document.getElementById("reset-button").addEventListener("click", resetStudents);
+  document.getElementById("togglebutton").addEventListener("click", toggleStudents);
   document.querySelectorAll("[data-action='filter']").forEach((button) => button.addEventListener("click", selectFilter));
   document.querySelectorAll("[data-action='sort']").forEach((button) => button.addEventListener("click", selectSort));
-  //   console.log("buttons ready");
-}
 
-// Runs the async function that fetches the data from the Json------------------------------
-// Not sure if this is needed at all?
-async function getData(studentDataUrl) {
-  const result = await fetch(studentDataUrl);
-  students = await result.json();
-  prepareObjects(jsonData);
+  //   console.log("buttons ready");
 }
 
 // Loads the Json and prepares the data for the following functions---------------------------
@@ -86,6 +86,7 @@ function loadJSON() {
     .then((jsonData) => {
       prepareObjects(jsonData);
     });
+
   // Shows the array with all the students in the console
   console.log(allStudents);
 }
@@ -110,6 +111,7 @@ function prepareObject(jsonObject) {
   studentCard.image = getStudentImage(fullnameTrim);
   studentCard.house = getStudentHouse(jsonObject);
   studentCard.gender = getStudentGender(jsonObject);
+  studentCard.blood = getBloodStatus(studentCard.lastname);
 
   return studentCard;
 }
@@ -316,6 +318,9 @@ function displayStudent(studentCard) {
   clone.querySelector("[data-field=gender]").textContent = studentCard.gender;
   clone.querySelector("#studentImage").src = `images/${studentCard.image}`;
 
+  //   clone blood
+  clone.querySelector("[data-field=bloodtype]").textContent = studentCard.blood;
+
   // Assign prefect
   clone.querySelector("[data-field=prefect]").dataset.prefect = studentCard.prefect;
   clone.querySelector("[data-field=prefect]").addEventListener("click", clickPrefect);
@@ -356,7 +361,6 @@ function displayStudent(studentCard) {
 
   // Check whether the student is from Slytherin or not.
   function clickIqSquad() {
-    console.log(`this is ${studentCard.house}`);
     if (checkStudentHouse(studentCard)) {
       if (studentCard.iqSquad === true) {
         studentCard.iqSquad = false;
@@ -365,7 +369,6 @@ function displayStudent(studentCard) {
       }
       buildList();
     } else {
-      console.log("The inq squad is only open for Slytherin students. See all Slytherin students?");
       notASlytherinStudent();
     }
   }
