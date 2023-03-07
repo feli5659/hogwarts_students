@@ -4,58 +4,73 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://use.typekit.net/stl8ddb.css" />
     <link rel="stylesheet" href="style.css" />
-    <title>Hogwarts Student List</title>
+    <title>Felicia's Hogwarts Student List</title>
   </head>
 
   <body>
-    <h1>Hogwarts Student List</h1>
-    <button id="togglebutton" onclick="toggleStudents()">Show expelled students</button>
-    <div class="search-container">
-      <input type="text" id="search-input" placeholder="Search by first name..." />
-      <button id="search-button">Search</button>
-      <button id="reset-button" type="button">Reset</button>
-    </div>
+    <header>
+      <h1>Hogwarts Student List</h1>
+      <div class="navigation">
+        <nav class="nav-filter">
+          <h3>Filter by:</h3>
+          <select name="filter" id="filter">
+            <option class="filter" data-action="filter" data-filter="all" selected>Show all</option>
+            <option class="filter" data-action="filter" data-filter="Gryffindor">Gryffindor</option>
+            <option class="filter" data-action="filter" data-filter="Slytherin">Slytherin</option>
+            <option class="filter" data-action="filter" data-filter="Hufflepuff">Hufflepuff</option>
+            <option class="filter" data-action="filter" data-filter="Ravenclaw">Ravenclaw</option>
+            <option class="filter" data-action="filter" data-filter="prefect">Prefects</option>
+            <option class="filter" data-action="filter" data-filter="expelled">Expelled students</option>
+            <option class="filter" data-action="filter" data-filter="inqSquad">Inquisitorial squad</option>
+            <option class="filter" data-action="filter" data-filter="gender">Boys</option>
+            <option class="filter" data-action="filter" data-filter="gender">Girls</option>
+            <option class="filter" data-action="filter" data-filter="blood">Pure blood</option>
+            <option class="filter" data-action="filter" data-filter="blood">Half blood</option>
+            <option class="filter" data-action="filter" data-filter="blood">Muggles</option>
+          </select>
+        </nav>
 
-    <p>
-      Filter:
-      <button class="filter" data-action="filter" data-filter="gryffindor">Gryffindor</button>
-      <button class="filter" data-action="filter" data-filter="slytherin">Slytherin</button>
-      <button class="filter" data-action="filter" data-filter="hufflepuff">Huffelpuff</button>
-      <button class="filter" data-action="filter" data-filter="ravenclaw">Ravenclaw</button>
-      <button class="filter" data-action="filter" data-filter="prefect">Prefects</button>
-      <button class="filter" data-action="filter" data-filter="iqsquad">Inquisitors</button>
-      <button class="filter" data-action="filter" data-filter="*">All Houses</button>
-    </p>
+        <nav class="nav_search">
+          <div class="search_wrapper">
+            <h3>Search:</h3>
+            <input type="text" name="searchbar" id="searchbar" placeholder="Search here..." />
+          </div>
+        </nav>
+        <button id="togglebutton" onclick="toggleStudents()">Show expelled students</button>
+      </div>
+    </header>
     <main>
       <section id="allstudents">
         <table id="list">
           <thead>
             <tr id="sorting">
               <th>Portrait</th>
-              <th data-action="sort" data-sort-direction="asc" data-sort="gender">Gender</th>
-              <th data-action="sort" data-sort-direction="asc" data-sort="iqsquad">Inquisitorial Squad</th>
-              <th data-action="sort" data-sort-direction="asc" data-sort="prefect">Prefect</th>
-              <th data-action="sort" data-sort-direction="asc" data-sort="bloodtype">Bloodtype</th>
               <th data-action="sort" data-sort-direction="asc" data-sort="firstname">First name</th>
               <th data-action="sort" data-sort-direction="asc" data-sort="nickname">Nick name</th>
               <th data-action="sort" data-sort-direction="asc" data-sort="middlename">Middle name</th>
               <th data-action="sort" data-sort-direction="asc" data-sort="lastname">Last name</th>
               <th data-action="sort" data-sort-direction="asc" data-sort="house">House</th>
+              <th data-action="sort" data-sort-direction="asc" data-sort="gender">Gender</th>
+              <th data-action="sort" data-sort-direction="asc" data-sort="iqsquad">Inquisitorial Squad</th>
+              <th data-action="sort" data-sort-direction="asc" data-sort="prefect">Prefect</th>
+              <th data-action="sort" data-sort-direction="asc" data-sort="bloodtype">Bloodtype</th>
             </tr>
           </thead>
           <template id="student">
             <tr>
               <td data-field="image"><img id="studentImage" src="" /></td>
-              <td data-field="gender"></td>
-              <td class="iqsquad" data-field="iqsquad">☆</td>
-              <td class="prefect" data-prefect="false" data-field="prefect"></td>
-              <td data-field="bloodtype"></td>
               <td data-field="firstname"></td>
               <td data-field="nickname"></td>
               <td data-field="middlename"></td>
               <td data-field="lastname"></td>
               <td data-field="house"></td>
+              <td data-field="gender"></td>
+              <td class="iqsquad" data-field="iqsquad">🐍</td>
+              <td class="prefect" data-prefect="false" data-field="prefect"></td>
+              <td data-field="bloodtype"></td>
+
               <td class="expelled" data-expel="false" data-field="expelled"></td>
             </tr>
           </template>
@@ -71,15 +86,15 @@
           <thead>
             <tr>
               <th>Portrait</th>
-              <th data-action="sort" data-sort-direction="asc" data-sort="gender">Gender</th>
-              <th data-action="sort" data-sort-direction="asc" data-sort="iqsquad">Inqusitorial Squad</th>
-              <th data-action="sort" data-sort-direction="asc" data-sort="prefect">Prefect</th>
-              <th data-action="sort" data-sort-direction="asc" data-sort="bloodtype">Bloodtype</th>
-              <th data-action="sort" data-sort-direction="asc" data-sort="name">First name</th>
+              <th data-action="sort" data-sort-direction="asc" data-sort="firstname">First name</th>
               <th data-action="sort" data-sort-direction="asc" data-sort="nickname">Nick name</th>
               <th data-action="sort" data-sort-direction="asc" data-sort="middlename">Middle name</th>
               <th data-action="sort" data-sort-direction="asc" data-sort="lastname">Last name</th>
               <th data-action="sort" data-sort-direction="asc" data-sort="house">House</th>
+              <th data-action="sort" data-sort-direction="asc" data-sort="gender">Gender</th>
+              <th data-action="sort" data-sort-direction="asc" data-sort="iqsquad">Inquisitorial Squad</th>
+              <th data-action="sort" data-sort-direction="asc" data-sort="prefect">Prefect</th>
+              <th data-action="sort" data-sort-direction="asc" data-sort="bloodtype">Bloodtype</th>
             </tr>
           </thead>
           <tbody>
@@ -118,13 +133,10 @@
     <div id="onlyslytherin" class="modal hide">
       <div class="dialog">
         <button class="closebutton">X</button>
-        <h1>Warning!</h1>
-        <p>
-          Only students of Slytherin can become a part of the Inqusitorial Squad. <br />
-          Please choose one or more Slytherin students?
-        </p>
+        <h1>Attention!</h1>
+        <p>The Inq Squad is only open for Slytherin students.</p>
         <div>
-          <button class="closebutton filter" data-action="filter" data-filter="slytherin">Get Slytherin students</button>
+          <button class="closebutton filter" data-action="filter" data-filter="slytherin">See all Slytherin students</button>
         </div>
       </div>
     </div>
@@ -133,7 +145,10 @@
       <div class="dialog">
         <button class="closebutton">X</button>
         <h1>Warning!</h1>
-        <p id="expelled_student_name">Do you wish to expel this student? <br /></p>
+        <p id="expelled_student_name">
+          You are about to expel this student. <br />
+          Is this correct?
+        </p>
         <div class="sidebyside">
           <button id="yes" class="closebutton">Yes</button>
           <button id="no" class="closebutton">No</button>

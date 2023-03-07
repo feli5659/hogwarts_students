@@ -2,6 +2,25 @@
 
 * {
   background-color: rgb(255, 252, 238);
+  margin: 10px 10px auto;
+  font-family: "birch-std", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+h1 {
+  text-align: center;
+  font-size: 3rem;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
 }
 
 /* Sorting styling */
@@ -24,17 +43,10 @@
   width: 100%;
 }
 
-#list th,
-#list td {
-  border: 2px solid rgb(96, 59, 5);
-  padding: 8px;
-  text-align: center;
-  border-radius: 15px;
-}
-
 #list th {
   background-color: rgb(96, 59, 5);
   color: whitesmoke;
+  cursor: pointer;
 }
 
 #expelledlist {
@@ -47,19 +59,18 @@
   display: none;
 }
 
+#list th,
+#list td,
 #expelledlist th,
 #expelledlist td {
   border: 1px solid black;
   padding: 8px;
   text-align: center;
+  font-size: 1.5rem;
 }
 
 #expelledlist th {
   background-color: orange;
-}
-
-#expelledlist tr:nth-child(even) {
-  background-color: rgb(173, 230, 210);
 }
 
 td[data-field="expelled"]::after {
@@ -106,5 +117,4 @@ button.close_button {
 
 .dialog {
   padding: 1rem;
-  background-color: antiquewhite;
 }
