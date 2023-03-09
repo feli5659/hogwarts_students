@@ -8,8 +8,24 @@ let allStudents = [];
 let expelledStudents = [];
 let allStudentsCopy = [];
 
+// counter variables
+let allStudentsCounter = 0;
+let expelledStudentsCounter = 0;
+let displayedStudentsCounter = 0;
+
+const allStudentsCounterElement = document.querySelector("#count-all-students");
+const expelledStudentsCounterElement = document.querySelector("#count-expelled-students");
+const displayedStudentsCounterElement = document.querySelector("#count-displayed-students");
+
 document.addEventListener("DOMContentLoaded", loadPage);
+// window.addEventListener("keydown", getHackPassword);
+
+// is the system hacked
+let isHacked = false;
+let keySaved = "";
+
 const Student = {
+  studentId: null,
   firstname: "",
   middlename: "",
   lastname: "",
@@ -21,6 +37,12 @@ const Student = {
   prefect: false,
   expelled: false,
   gender: "",
+};
+
+const settings = {
+  filter: "all",
+  sortBy: "firstname",
+  sortDir: "desc",
 };
 
 // Toggles between the lists of students and expelled students
@@ -55,11 +77,7 @@ const filterFunctions = {
 };
 
 // controls the sorting and filter settings
-const settings = {
-  filter: "all",
-  sortBy: "firstname",
-  sortDir: "desc",
-};
+
 // Loads the page
 function loadPage() {
   console.log("Page loaded");
@@ -99,6 +117,9 @@ function prepareObjects(jsonData) {
 function prepareObject(jsonObject) {
   // Creates a const with the name student card that contains all the information from the Object
   const studentCard = Object.create(Student);
+
+  // gives students an ID to count
+  // studentCard.studentId = i + 1;
 
   // Trims the fullName string
   let fullnameTrim = jsonObject.fullname.trim().split(" ");
@@ -290,15 +311,23 @@ function resetStudents() {
 }
 // Build the list of students whenever the user filter or sorts. This is the center of the script
 function buildList() {
+  displayedStudentsCounter = 0;
+
   const currentList = filterList(allStudents);
   const sortedList = sortList(currentList);
+
   displayList(sortedList);
+  updateCounters(currentList);
 }
 
 // Clears the html and displays the list-----------------------------------
 function displayList(allStudents) {
   // Grabs the id="list" and the tbody element from the HTML and empties the content
   document.querySelector("#list tbody").innerHTML = "";
+
+  // count students
+  // const studentCounted = studentCounter(students);
+  // displayCount(studentCounted);
 
   //  Runs the displayStudent functions for each of the data entries in the Json file
   allStudents.forEach(displayStudent);
@@ -317,6 +346,7 @@ function displayStudent(studentCard) {
   clone.querySelector("[data-field=house]").textContent = studentCard.house;
   clone.querySelector("[data-field=gender]").textContent = studentCard.gender;
   clone.querySelector("#studentImage").src = `images/${studentCard.image}`;
+  // clone.querySelector(".student_id").textContent = `Id: ${studentCard.studentId}`;
 
   //   clone blood
   clone.querySelector("[data-field=blood]").textContent = studentCard.blood;
@@ -324,6 +354,10 @@ function displayStudent(studentCard) {
   // Assign prefect
   clone.querySelector("[data-field=prefect]").dataset.prefect = studentCard.prefect;
   clone.querySelector("[data-field=prefect]").addEventListener("click", clickPrefect);
+
+  // count students
+  const studentCounted = studentCounter(studentCard);
+  displayCount(studentCounted);
 
   // Expelled function.
   clone.querySelector("[data-field=expelled]").addEventListener("click", function () {
@@ -511,3 +545,41 @@ function moveToExpelled(studentCard) {
   //   console.log(expelledStudents);
   buildList();
 }
+
+// // count students
+
+function updateCounters(currentList) {
+  allStudentsCounter = allStudents.length;
+  allStudentsCounterElement.textContent = allStudentsCounter;
+
+  expelledStudentsCounter = expelledStudents.length;
+  expelledStudentsCounterElement.textContent = expelledStudentsCounter;
+
+  displayedStudentsCounter = currentList.length;
+  displayedStudentsCounterElement.textContent = displayedStudentsCounter;
+}
+
+// Counting all the students, their houses, displayed and expelled
+function studentCounter(students) {
+  const countStudents = {
+    Gryffindor: 0,
+    Hufflepuff: 0,
+    Ravenclaw: 0,
+    Slytherin: 0,
+  };
+
+  allStudents.forEach((student) => {
+    countStudents[student.house]++;
+  });
+
+  return countStudents;
+}
+
+function displayCount(studentCounted) {
+  document.querySelector("#count-gryf-students").textContent = studentCounted.Gryffindor;
+  document.querySelector("#count-huff-students").textContent = studentCounted.Hufflepuff;
+  document.querySelector("#count-rave-students").textContent = studentCounted.Ravenclaw;
+  document.querySelector("#count-slyt-students").textContent = studentCounted.Slytherin;
+}
+
+// HACKING ------------------------------------------------------------------------->

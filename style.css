@@ -19,7 +19,8 @@ h1 {
   font-size: 3rem;
 }
 
-nav {
+nav,
+.counter_container {
   display: flex;
   justify-content: center;
 }
@@ -27,6 +28,13 @@ nav {
 .navigation {
   display: flex;
   justify-content: space-around;
+}
+
+.counter_div,
+.counter_house {
+  display: flex;
+  justify-content: space-around;
+  border: solid 1px brown;
 }
 
 /* Sorting styling */
