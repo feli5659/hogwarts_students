@@ -11,49 +11,49 @@
   </head>
 
   <body>
-    <header>
-      <h1>Hogwarts Student List</h1>
-      <div class="navigation">
-        <nav class="nav-filter">
-          <h3>Filter by:</h3>
-          <select name="filter" id="filter">
-            <option class="filter" data-action="filter" data-filter="all" selected>Show all</option>
-            <option class="filter" data-action="filter" data-filter="gryffindor">Gryffindor</option>
-            <option class="filter" data-action="filter" data-filter="slytherin">Slytherin</option>
-            <option class="filter" data-action="filter" data-filter="hufflepuff">Hufflepuff</option>
-            <option class="filter" data-action="filter" data-filter="ravenclaw">Ravenclaw</option>
-            <option class="filter" data-action="filter" data-filter="prefect">Prefects</option>
-            <option class="filter" data-action="filter" data-filter="iqSquad">Inquisitorial squad</option>
-            <option class="filter" data-action="filter" data-filter="boy">Boys</option>
-            <option class="filter" data-action="filter" data-filter="girl">Girls</option>
-            <option class="filter" data-action="filter" data-filter="pureblood">Pure-blood</option>
-            <option class="filter" data-action="filter" data-filter="halfblood">Half-blood</option>
-            <option class="filter" data-action="filter" data-filter="muggleborn">Muggle-born</option>
-          </select>
-        </nav>
-
-        <nav class="search-container">
-          <input type="text" id="search-input" placeholder="Search..." />
-          <button id="search-button">Search</button>
-          <button id="reset-button" type="button">Reset</button>
-        </nav>
-        <button id="togglebutton">Show expelled students</button>
-      </div>
-      <div class="counter_container">
-        <div class="counter_div">
-          <h3>Amount of enrolled students: <span id="count-all-students"></span></h3>
-          <h3>Amount of expelled students: <span id="count-expelled-students"></span></h3>
-          <h3>Amount of displayed students: <span id="count-displayed-students"></span></h3>
-        </div>
-        <div class="counter_house">
-          <h3>Amount of students in Gryffindor: <span id="count-gryf-students"></span></h3>
-          <h3>Amount of students in Ravenclaw: <span id="count-rave-students"></span></h3>
-          <h3>Amount of students in Hufflepuff: <span id="count-huff-students"></span></h3>
-          <h3>Amount of students in Slytherin: <span id="count-slyt-students"></span></h3>
-        </div>
-      </div>
-    </header>
     <main>
+      <header>
+        <h1>Hogwarts Student List</h1>
+        <div class="navigation">
+          <nav class="nav-filter">
+            <h3>Filter by:</h3>
+            <select name="filter" id="filter">
+              <option class="filter" data-action="filter" data-filter="all" selected>Show all</option>
+              <option class="filter" data-action="filter" data-filter="gryffindor">Gryffindor</option>
+              <option class="filter" data-action="filter" data-filter="slytherin">Slytherin</option>
+              <option class="filter" data-action="filter" data-filter="hufflepuff">Hufflepuff</option>
+              <option class="filter" data-action="filter" data-filter="ravenclaw">Ravenclaw</option>
+              <option class="filter" data-action="filter" data-filter="prefect">Prefects</option>
+              <option class="filter" data-action="filter" data-filter="iqSquad">Inquisitorial squad</option>
+              <option class="filter" data-action="filter" data-filter="boy">Boys</option>
+              <option class="filter" data-action="filter" data-filter="girl">Girls</option>
+              <option class="filter" data-action="filter" data-filter="pureblood">Pure-blood</option>
+              <option class="filter" data-action="filter" data-filter="halfblood">Half-blood</option>
+              <option class="filter" data-action="filter" data-filter="muggleborn">Muggle-born</option>
+            </select>
+          </nav>
+
+          <nav class="search-container">
+            <input type="text" id="search-input" placeholder="Search..." />
+            <button id="search-button">Search</button>
+            <button id="reset-button" type="button">Reset</button>
+          </nav>
+          <button id="togglebutton">Show expelled students</button>
+        </div>
+        <div class="counter_container">
+          <div class="counter_div">
+            <h3>Amount of enrolled students: <span id="count-all-students"></span></h3>
+            <h3>Amount of expelled students: <span id="count-expelled-students"></span></h3>
+            <h3>Amount of displayed students: <span id="count-displayed-students"></span></h3>
+          </div>
+          <div class="counter_house">
+            <h3>Amount of students in Gryffindor: <span id="count-gryf-students"></span></h3>
+            <h3>Amount of students in Ravenclaw: <span id="count-rave-students"></span></h3>
+            <h3>Amount of students in Hufflepuff: <span id="count-huff-students"></span></h3>
+            <h3>Amount of students in Slytherin: <span id="count-slyt-students"></span></h3>
+          </div>
+        </div>
+      </header>
       <section id="allstudents">
         <table id="list">
           <thead>
@@ -83,6 +83,7 @@
               <td class="prefect" data-prefect="false" data-field="prefect"></td>
               <td data-field="blood"></td>
               <td class="expelled" data-expel="false" data-field="expelled"></td>
+              <td data-field="showMore" class="showMore"><button class="showMore">Show More</button></td>
             </tr>
           </template>
           <tbody>
@@ -116,7 +117,7 @@
           <tr>
             <td data-field="image"><img id="studentImage" src="" /></td>
             <td data-field="gender"></td>
-            <td class="iqsquad" data-field="iqsquad">☆</td>
+            <td class="iqsquad" data-field="iqsquad"></td>
             <td class="prefect" data-prefect="false" data-field="prefect"></td>
             <td data-field="blood"></td>
             <td data-field="firstname"></td>
@@ -166,6 +167,72 @@
         </div>
       </div>
     </div>
+
+    <div id="pop_up" class="modal hide">
+      <section class="content">
+        <button class="close">&times;</button>
+
+        <article class="student_img_pop">
+          <img id="image" class="student_img" src="" alt="" />
+          <img class="crest_img" src="" alt="crests" data-badges="crest" />
+        </article>
+        <article class="info_wrapper">
+          <div id="info1">
+            <div>
+              <h3>Full name:</h3>
+              <p data-field="fullname"></p>
+            </div>
+            <div>
+              <h2>First name:</h2>
+              <p data-field="firstname"></p>
+            </div>
+            <div>
+              <h2>Middle name:</h2>
+
+              <p data-field="middlename"></p>
+            </div>
+            <div>
+              <h2>Last name:</h2>
+
+              <p data-field="lastname"></p>
+            </div>
+            <div>
+              <h2>Nickname:</h2>
+              <p data-field="nickname"></p>
+            </div>
+            <div>
+              <h2>Gender:</h2>
+              <p data-field="gender"></p>
+            </div>
+            <div>
+              <h2>House:</h2>
+
+              <p data-field="house"></p>
+            </div>
+            <div>
+              <h2>Blood:</h2>
+              <p data-field="blood"></p>
+            </div>
+          </div>
+        </article>
+        <div class="badges"></div>
+        <div class="badges_btn">
+          <button id="prefect_btn" data-prefect="false">Prefect</button>
+          <button id="squad_btn" data-inq-squad="false">Inq. squad</button>
+          <button id="expel_btn" data-expel="false">Expel</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- <div id="popup">
+      <div id="close">X</div>
+      <div data-field="image"><img id="popup_studentImage" src="" alt=""></div>
+        <h2 class="popup_firstname"></h2>
+        <h2 class="popup_middlename"></h2>
+        <h2 class="popup_lastname"></h2>
+        <h3 class="popup_nickname"></h3>
+        <p class="popup_gender"></p>
+    </div> -->
 
     <script type="module" src="js.js"></script>
     <script type="module" src="blood.js"></script>

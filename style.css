@@ -22,6 +22,18 @@ h3 {
   font-size: 1.2rem;
 }
 
+#info1 p {
+  font-size: 1.3rem;
+  color: grey;
+}
+#info1 h3 {
+  font-size: 2rem;
+}
+
+#info1 div {
+  display: flex;
+}
+
 nav,
 .counter_container {
   display: flex;
@@ -117,6 +129,11 @@ td[data-field="prefect"][data-prefect="false"]::after {
   visibility: hidden;
 }
 
+.blur {
+  filter: blur(0.3rem);
+  transition: 0.1s;
+}
+
 .modal {
   position: fixed;
   top: 0;
@@ -129,12 +146,32 @@ td[data-field="prefect"][data-prefect="false"]::after {
   align-items: center;
 }
 
-button.close_button {
+.close {
   position: absolute;
-  right: 0;
-  top: 0;
+  top: 40px;
+  right: 40%;
+  border: none;
+  font-size: 2rem;
+}
+
+.close:hover {
+  border: solid black 2px;
+}
+
+.content {
+  padding: 120px;
 }
 
 .dialog {
-  padding: 1rem;
+  padding: 120px;
+}
+
+/* crest */
+
+.crest_img {
+  max-width: 50%;
+}
+
+.student_img_pop {
+  display: flex;
 }

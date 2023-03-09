@@ -338,7 +338,7 @@ function displayStudent(studentCard) {
   // Clones the template for each of the students
   const clone = document.querySelector("template#student").content.cloneNode(true);
 
-  // Grabs the firstname data field in the HTML and displays the textcontent from the studentCard firstname property
+  // Grabs the data field in the HTML and displays the textcontent from the studentCard property
   clone.querySelector("[data-field=firstname]").textContent = studentCard.firstname;
   clone.querySelector("[data-field=nickname]").textContent = studentCard.nickname;
   clone.querySelector("[data-field=middlename]").textContent = studentCard.middlename;
@@ -350,6 +350,11 @@ function displayStudent(studentCard) {
   if (studentCard.image === ``) {
     clone.querySelector("#studentImage").src = `nopic.png`;
   }
+
+  // show more button popup
+  clone.querySelector("[data-field='showMore']").addEventListener("click", () => {
+    popUp(studentCard);
+  });
 
   //   clone blood
   clone.querySelector("[data-field=blood]").textContent = studentCard.blood;
@@ -583,6 +588,59 @@ function displayCount(studentCounted) {
   document.querySelector("#count-huff-students").textContent = studentCounted.Hufflepuff;
   document.querySelector("#count-rave-students").textContent = studentCounted.Ravenclaw;
   document.querySelector("#count-slyt-students").textContent = studentCounted.Slytherin;
+}
+
+// pop_up
+
+function popUp(studentCard) {
+  console.log(studentCard);
+  const popup = document.querySelector("#pop_up");
+  popup.classList.remove("hide");
+
+  const htmlPage = document.querySelector("main");
+  htmlPage.classList.add("blur");
+
+  popup.querySelector("#image").src = `images/${studentCard.image}`;
+
+  popup.querySelector("[data-field=firstname]").textContent = `${studentCard.firstname}`;
+  popup.querySelector("[data-field=middlename]").textContent = `${studentCard.middlename}`;
+  popup.querySelector("[data-field=nickname").textContent = `${studentCard.nickname}`;
+  popup.querySelector("[data-field=lastname]").textContent = `${studentCard.lastname}`;
+  popup.querySelector("[data-field=gender").textContent = `${studentCard.gender}`;
+  popup.querySelector("[data-field=house]").textContent = `${studentCard.house}`;
+  popup.querySelector("[data-field=blood]").textContent = `${studentCard.blood}`;
+
+  // House crests
+
+  const crestImg = document.querySelector("#pop_up .crest_img");
+
+  if (studentCard.house === "Gryffindor") {
+    crestImg.src = "house_crests/Gryffindor.svg";
+  }
+  if (studentCard.house === "Slytherin") {
+    crestImg.src = "house_crests/Slytherin.svg";
+  }
+  if (studentCard.house === "Ravenclaw") {
+    crestImg.src = "house_crests/Ravenclaw.svg";
+  }
+  if (studentCard.house === "Hufflepuff") {
+    crestImg.src = "house_crests/Huffelpuff.svg";
+  }
+
+  if (studentCard.middlename === `N/a`) {
+    popup.querySelector("[data-field=fullname]").textContent = `${studentCard.firstname} ${studentCard.lastname}`;
+  } else {
+    popup.querySelector("[data-field=fullname]").textContent = `${studentCard.firstname} ${studentCard.middlename} ${studentCard.lastname}`;
+  }
+
+  // closing
+  document.querySelector(".close").addEventListener("click", closePopUp);
+
+  function closePopUp() {
+    document.querySelector("#pop_up").classList.add("hide");
+    document.querySelector("main").classList.remove("blur");
+    document.querySelector("#pop_up .close").removeEventListener("click", closePopUp);
+  }
 }
 
 // HACKING ------------------------------------------------------------------------->
