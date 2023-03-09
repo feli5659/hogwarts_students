@@ -58,6 +58,7 @@ const filterFunctions = {
 // controls the sorting and filter settings
 const settings = {
   filter: "all",
+  prefects: [],
   sortBy: "firstname",
   sortDir: "desc",
 };
@@ -73,8 +74,19 @@ function registerButtons() {
   document.getElementById("search-button").addEventListener("click", searchStudents);
   document.getElementById("reset-button").addEventListener("click", resetStudents);
   document.getElementById("togglebutton").addEventListener("click", toggleStudents);
-  document.querySelectorAll("[data-action='filter']").forEach((button) => button.addEventListener("click", selectFilter));
   document.querySelectorAll("[data-action='sort']").forEach((button) => button.addEventListener("click", selectSort));
+
+  // filtering
+  document.querySelectorAll("[data-action='filter']").forEach((button) => button.addEventListener("click", selectFilter));
+  document.querySelectorAll("[data-filter=prefects]").forEach((button) => {
+    button.addEventListener("click", filterByPrefect);
+  });
+  // document.querySelectorAll("[data-filter=inqSquad]").forEach((button) => {
+  //   button.addEventListener("click", filterBySquad);
+  // });
+  // document.querySelectorAll("[data-filter=expelled]").forEach((button) => {
+  //   button.addEventListener("click", showExpelled);
+  // });
 
   //   console.log("buttons ready");
 }
@@ -129,6 +141,24 @@ function setFilter(filter) {
   buildList();
 }
 
+function filterList(filteredList) {
+  const filterFunction = filterFunctions[settings.filterBy];
+  if (filterFunction) {
+    console.log(settings.filterBy);
+    filteredList = allStudents.filter(filterFunction);
+  } else {
+    filteredList = allStudents;
+  }
+  return filteredList;
+}
+
+function filterByPrefect() {
+  //let prefects; // i made it global so i can call it here
+  settings.prefects = allStudents.filter((student) => student.prefect);
+  displayList(settings.prefects);
+  console.log(settings.filter);
+}
+
 function selectSort(event) {
   const sortBy = event.target.dataset.sort;
   const sortDir = event.target.dataset.sortDirection;
@@ -176,17 +206,6 @@ function sortList(sortedList) {
     }
   }
   return sortedList;
-}
-
-function filterList(filteredList) {
-  const filterFunction = filterFunctions[settings.filterBy];
-  if (filterFunction) {
-    console.log(settings.filterBy);
-    filteredList = allStudents.filter(filterFunction);
-  } else {
-    filteredList = allStudents;
-  }
-  return filteredList;
 }
 
 // Gets the firstname
