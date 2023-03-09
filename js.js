@@ -346,7 +346,10 @@ function displayStudent(studentCard) {
   clone.querySelector("[data-field=house]").textContent = studentCard.house;
   clone.querySelector("[data-field=gender]").textContent = studentCard.gender;
   clone.querySelector("#studentImage").src = `images/${studentCard.image}`;
-  // clone.querySelector(".student_id").textContent = `Id: ${studentCard.studentId}`;
+
+  if (studentCard.image === ``) {
+    clone.querySelector("#studentImage").src = `nopic.png`;
+  }
 
   //   clone blood
   clone.querySelector("[data-field=blood]").textContent = studentCard.blood;
