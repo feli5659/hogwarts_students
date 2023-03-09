@@ -60,11 +60,11 @@
             <tr id="sorting">
               <th>Portrait</th>
               <th data-action="sort" data-sort-direction="asc" data-sort="firstname">First name</th>
-              <th data-action="sort" data-sort-direction="asc" data-sort="nickname">Nick name</th>
+              <!-- <th data-action="sort" data-sort-direction="asc" data-sort="nickname">Nick name</th>
               <th data-action="sort" data-sort-direction="asc" data-sort="middlename">Middle name</th>
-              <th data-action="sort" data-sort-direction="asc" data-sort="lastname">Last name</th>
+              <th data-action="sort" data-sort-direction="asc" data-sort="lastname">Last name</th> -->
               <th data-action="sort" data-sort-direction="asc" data-sort="house">House</th>
-              <th data-action="sort" data-sort-direction="asc" data-sort="gender">Gender</th>
+              <!-- <th data-action="sort" data-sort-direction="asc" data-sort="gender">Gender</th> -->
               <th data-action="sort" data-sort-direction="asc" data-sort="iqsquad">Inquisitorial Squad</th>
               <th data-action="sort" data-sort-direction="asc" data-sort="prefect">Prefect</th>
               <th data-action="sort" data-sort-direction="asc" data-sort="blood">Bloodtype</th>
@@ -74,11 +74,11 @@
             <tr>
               <td data-field="image"><img id="studentImage" src="" /></td>
               <td data-field="firstname"></td>
-              <td data-field="nickname"></td>
+              <!-- <td data-field="nickname"></td>
               <td data-field="middlename"></td>
-              <td data-field="lastname"></td>
+              <td data-field="lastname"></td> -->
               <td data-field="house"></td>
-              <td data-field="gender"></td>
+              <!-- <td data-field="gender"></td> -->
               <td class="iqsquad" data-squad="false" data-field="iqsquad"></td>
               <td class="prefect" data-prefect="false" data-field="prefect"></td>
               <td data-field="blood"></td>
@@ -116,15 +116,15 @@
         <template id="expelledstudent">
           <tr>
             <td data-field="image"><img id="studentImage" src="" /></td>
-            <td data-field="gender"></td>
-            <td class="iqsquad" data-field="iqsquad"></td>
-            <td class="prefect" data-prefect="false" data-field="prefect"></td>
-            <td data-field="blood"></td>
             <td data-field="firstname"></td>
             <td data-field="nickname"></td>
             <td data-field="middlename"></td>
             <td data-field="lastname"></td>
             <td data-field="house"></td>
+            <td data-field="gender"></td>
+            <td class="iqsquad" data-field="iqsquad"></td>
+            <td class="prefect" data-prefect="false" data-field="prefect"></td>
+            <td data-field="blood"></td>
           </tr>
         </template>
       </section>
@@ -219,7 +219,7 @@
         <div class="badges_btn">
           <button id="prefect_btn" data-prefect="false">Prefect</button>
           <button id="squad_btn" data-inq-squad="false">Inq. squad</button>
-          <button id="expel_btn" data-expel="false">Expel</button>
+          <button id="expel_btn" data-field="expelled" data-expel="false">Expel</button>
         </div>
       </section>
     </div>
