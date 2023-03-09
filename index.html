@@ -22,14 +22,13 @@
             <option class="filter" data-action="filter" data-filter="slytherin">Slytherin</option>
             <option class="filter" data-action="filter" data-filter="hufflepuff">Hufflepuff</option>
             <option class="filter" data-action="filter" data-filter="ravenclaw">Ravenclaw</option>
-            <option class="filter" data-action="filter" data-filter="prefects">Prefects</option>
-            <option class="filter" data-action="filter" data-filter="expelled">Expelled students</option>
-            <option class="filter" data-action="filter" data-filter="inqSquad">Inquisitorial squad</option>
-            <option class="filter" data-action="filter" data-filter="gender">Boys</option>
-            <option class="filter" data-action="filter" data-filter="gender">Girls</option>
-            <option class="filter" data-action="filter" data-filter="pureblood">Pure blood</option>
-            <option class="filter" data-action="filter" data-filter="halfblood">Half blood</option>
-            <option class="filter" data-action="filter" data-filter="muggleborn">Muggles</option>
+            <option class="filter" data-action="filter" data-filter="prefect">Prefects</option>
+            <option class="filter" data-action="filter" data-filter="iqSquad">Inquisitorial squad</option>
+            <option class="filter" data-action="filter" data-filter="boy">Boys</option>
+            <option class="filter" data-action="filter" data-filter="girl">Girls</option>
+            <option class="filter" data-action="filter" data-filter="pureblood">Pure-blood</option>
+            <option class="filter" data-action="filter" data-filter="halfblood">Half-blood</option>
+            <option class="filter" data-action="filter" data-filter="muggleborn">Muggle-born</option>
           </select>
         </nav>
 
@@ -55,7 +54,7 @@
               <th data-action="sort" data-sort-direction="asc" data-sort="gender">Gender</th>
               <th data-action="sort" data-sort-direction="asc" data-sort="iqsquad">Inquisitorial Squad</th>
               <th data-action="sort" data-sort-direction="asc" data-sort="prefect">Prefect</th>
-              <th data-action="sort" data-sort-direction="asc" data-sort="bloodtype">Bloodtype</th>
+              <th data-action="sort" data-sort-direction="asc" data-sort="blood">Bloodtype</th>
             </tr>
           </thead>
           <template id="student">
@@ -67,9 +66,9 @@
               <td data-field="lastname"></td>
               <td data-field="house"></td>
               <td data-field="gender"></td>
-              <td class="iqsquad" data-field="iqsquad">🐍</td>
+              <td class="iqsquad" data-squad="false" data-field="iqsquad"></td>
               <td class="prefect" data-prefect="false" data-field="prefect"></td>
-              <td data-field="bloodtype"></td>
+              <td data-field="blood"></td>
 
               <td class="expelled" data-expel="false" data-field="expelled"></td>
             </tr>
@@ -94,7 +93,7 @@
               <th data-action="sort" data-sort-direction="asc" data-sort="gender">Gender</th>
               <th data-action="sort" data-sort-direction="asc" data-sort="iqsquad">Inquisitorial Squad</th>
               <th data-action="sort" data-sort-direction="asc" data-sort="prefect">Prefect</th>
-              <th data-action="sort" data-sort-direction="asc" data-sort="bloodtype">Bloodtype</th>
+              <th data-action="sort" data-sort-direction="asc" data-sort="blood">Bloodtype</th>
             </tr>
           </thead>
           <tbody>
@@ -107,7 +106,7 @@
             <td data-field="gender"></td>
             <td class="iqsquad" data-field="iqsquad">☆</td>
             <td class="prefect" data-prefect="false" data-field="prefect"></td>
-            <td data-field="bloodtype"></td>
+            <td data-field="blood"></td>
             <td data-field="firstname"></td>
             <td data-field="nickname"></td>
             <td data-field="middlename"></td>

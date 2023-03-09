@@ -83,6 +83,9 @@ td[data-field="expelled"]::after {
   content: " ❌ ";
 }
 
+.iqsquad {
+  cursor: pointer;
+}
 td[data-field="prefect"]::after {
   content: " 🥇 ";
 }
@@ -123,9 +126,4 @@ button.close_button {
 
 .dialog {
   padding: 1rem;
-}
-
-.active {
-  background-color: blue;
-  color: white;
 }

@@ -7,9 +7,6 @@ const studentDataUrl = "https://petlatkea.dk/2021/hogwarts/students.json";
 let allStudents = [];
 let expelledStudents = [];
 let allStudentsCopy = [];
-let studentBloodStatus = [];
-let pureBloods = [];
-let halfBloods = [];
 
 document.addEventListener("DOMContentLoaded", loadPage);
 const Student = {
@@ -50,15 +47,16 @@ const filterFunctions = {
   slytherin: (studentCard) => studentCard.house === "Slytherin",
   prefect: (studentCard) => studentCard.prefect === true,
   iqsquad: (studentCard) => studentCard.iqSquad === true,
-  pureblood: (studentCard) => studentCard.blood === "Pure Blood",
-  halfblood: (studentCard) => studentCard.blood === "Half Blood",
-  muggleborn: (studentCard) => studentCard.blood === "Muggle Born",
+  girl: (studentCard) => studentCard.gender === "girl",
+  boy: (studentCard) => studentCard.gender === "boy",
+  pureblood: (studentCard) => studentCard.blood === "Pure-Blood",
+  halfblood: (studentCard) => studentCard.blood === "Half-Blood",
+  muggleborn: (studentCard) => studentCard.blood === "Muggle-Born",
 };
 
 // controls the sorting and filter settings
 const settings = {
   filter: "all",
-  prefects: [],
   sortBy: "firstname",
   sortDir: "desc",
 };
@@ -74,19 +72,8 @@ function registerButtons() {
   document.getElementById("search-button").addEventListener("click", searchStudents);
   document.getElementById("reset-button").addEventListener("click", resetStudents);
   document.getElementById("togglebutton").addEventListener("click", toggleStudents);
-  document.querySelectorAll("[data-action='sort']").forEach((button) => button.addEventListener("click", selectSort));
-
-  // filtering
   document.querySelectorAll("[data-action='filter']").forEach((button) => button.addEventListener("click", selectFilter));
-  document.querySelectorAll("[data-filter=prefects]").forEach((button) => {
-    button.addEventListener("click", filterByPrefect);
-  });
-  // document.querySelectorAll("[data-filter=inqSquad]").forEach((button) => {
-  //   button.addEventListener("click", filterBySquad);
-  // });
-  // document.querySelectorAll("[data-filter=expelled]").forEach((button) => {
-  //   button.addEventListener("click", showExpelled);
-  // });
+  document.querySelectorAll("[data-action='sort']").forEach((button) => button.addEventListener("click", selectSort));
 
   //   console.log("buttons ready");
 }
@@ -141,24 +128,6 @@ function setFilter(filter) {
   buildList();
 }
 
-function filterList(filteredList) {
-  const filterFunction = filterFunctions[settings.filterBy];
-  if (filterFunction) {
-    console.log(settings.filterBy);
-    filteredList = allStudents.filter(filterFunction);
-  } else {
-    filteredList = allStudents;
-  }
-  return filteredList;
-}
-
-function filterByPrefect() {
-  //let prefects; // i made it global so i can call it here
-  settings.prefects = allStudents.filter((student) => student.prefect);
-  displayList(settings.prefects);
-  console.log(settings.filter);
-}
-
 function selectSort(event) {
   const sortBy = event.target.dataset.sort;
   const sortDir = event.target.dataset.sortDirection;
@@ -206,6 +175,17 @@ function sortList(sortedList) {
     }
   }
   return sortedList;
+}
+
+function filterList(filteredList) {
+  const filterFunction = filterFunctions[settings.filterBy];
+  if (filterFunction) {
+    console.log(settings.filterBy);
+    filteredList = allStudents.filter(filterFunction);
+  } else {
+    filteredList = allStudents;
+  }
+  return filteredList;
 }
 
 // Gets the firstname
@@ -279,7 +259,8 @@ function getStudentHouse(person) {
 }
 function getStudentGender(person) {
   const genderTrim = person.gender.trim();
-  return `${genderTrim.charAt(0).toUpperCase()}${genderTrim.slice(1).toLowerCase()}`;
+  // return `${genderTrim.charAt(0).toUpperCase()}${genderTrim.slice(1).toLowerCase()}`;
+  return genderTrim;
 }
 
 // Search function
@@ -338,7 +319,7 @@ function displayStudent(studentCard) {
   clone.querySelector("#studentImage").src = `images/${studentCard.image}`;
 
   //   clone blood
-  clone.querySelector("[data-field=bloodtype]").textContent = studentCard.blood;
+  clone.querySelector("[data-field=blood]").textContent = studentCard.blood;
 
   // Assign prefect
   clone.querySelector("[data-field=prefect]").dataset.prefect = studentCard.prefect;
@@ -516,7 +497,7 @@ function moveToExpelled(studentCard) {
   row.querySelector("[data-field='gender']").textContent = studentCard.gender;
   row.querySelector("[data-field='iqsquad']").textContent = `N/A`;
   row.querySelector("[data-field='prefect']").textContent = `N/A`;
-  row.querySelector("[data-field='bloodtype']").textContent = studentCard.blood;
+  row.querySelector("[data-field='blood']").textContent = studentCard.blood;
   row.querySelector("[data-field='firstname']").textContent = studentCard.firstname;
   row.querySelector("[data-field='nickname']").textContent = studentCard.nickname;
   row.querySelector("[data-field='middlename']").textContent = studentCard.middlename;
