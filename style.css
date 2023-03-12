@@ -8,6 +8,13 @@
   font-style: normal;
 }
 
+.hogwarts_logo {
+  max-width: 20%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 button,
 #search-input,
 #filter {
@@ -271,7 +278,6 @@ td[data-field="prefect"][data-prefect="false"]::after {
   }
 }
 
-
-.invert{
+.invert {
   filter: invert(1);
 }
