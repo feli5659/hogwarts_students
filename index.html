@@ -11,6 +11,22 @@
   </head>
 
   <body>
+    <div id="dobby_hack" class="hide"><img src="dobby_1.png" alt="dobby" /></div>
+    <div id="remove_aorb">
+      <section class="dialog_content">
+        <button class="close_dialog">&times;</button>
+        <h2>You can only have two prefects per house!</h2>
+        <h3>Remove one, to appoint a new prefect</h3>
+        <p>
+          <button data-action="remove1">remove</button>
+          <span class="student1">Name, the house</span>
+        </p>
+        <p>
+          <button data-action="remove2">remove</button>
+          <span class="student2">Name, the house</span>
+        </p>
+      </section>
+    </div>
     <main>
       <header>
         <h1>Hogwarts Student List</h1>
@@ -67,11 +83,11 @@
               <!-- <th data-action="sort" data-sort-direction="asc" data-sort="gender">Gender</th> -->
               <th data-action="sort" data-sort-direction="asc" data-sort="iqsquad">Inquisitorial Squad</th>
               <th data-action="sort" data-sort-direction="asc" data-sort="prefect">Prefect</th>
-              <th data-action="sort" data-sort-direction="asc" data-sort="blood">Bloodtype</th>
+              <!-- <th data-action="sort" data-sort-direction="asc" data-sort="blood">Bloodtype</th> -->
             </tr>
           </thead>
           <template id="student">
-            <tr>
+            <tr class="student_container">
               <td data-field="image"><img id="studentImage" src="" /></td>
               <td data-field="firstname"></td>
               <!-- <td data-field="nickname"></td>
@@ -81,7 +97,7 @@
               <!-- <td data-field="gender"></td> -->
               <td class="iqsquad" data-squad="false" data-field="iqsquad"></td>
               <td class="prefect" data-prefect="false" data-field="prefect"></td>
-              <td data-field="blood"></td>
+              <!-- <td data-field="blood"></td> -->
               <td class="expelled" data-expel="false" data-field="expelled"></td>
               <td data-field="showMore" class="showMore"><button class="showMore">Show More</button></td>
             </tr>
@@ -217,22 +233,12 @@
         </article>
         <div class="badges"></div>
         <div class="badges_btn">
-          <button id="prefect_btn" data-prefect="false">Prefect</button>
+          <button id="prefect_btn" data-field="prefect" data-prefect="false">Appoint as prefect</button>
           <button id="squad_btn" data-inq-squad="false">Inq. squad</button>
           <button id="expel_btn" data-field="expelled" data-expel="false">Expel</button>
         </div>
       </section>
     </div>
-
-    <!-- <div id="popup">
-      <div id="close">X</div>
-      <div data-field="image"><img id="popup_studentImage" src="" alt=""></div>
-        <h2 class="popup_firstname"></h2>
-        <h2 class="popup_middlename"></h2>
-        <h2 class="popup_lastname"></h2>
-        <h3 class="popup_nickname"></h3>
-        <p class="popup_gender"></p>
-    </div> -->
 
     <script type="module" src="js.js"></script>
     <script type="module" src="blood.js"></script>

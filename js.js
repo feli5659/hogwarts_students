@@ -8,6 +8,8 @@ let allStudents = [];
 let expelledStudents = [];
 let allStudentsCopy = [];
 
+let systemHacked = false;
+
 // counter variables
 let allStudentsCounter = 0;
 let expelledStudentsCounter = 0;
@@ -25,7 +27,6 @@ let isHacked = false;
 let keySaved = "";
 
 const Student = {
-  studentId: null,
   firstname: "",
   middlename: "",
   lastname: "",
@@ -340,11 +341,11 @@ function displayStudent(studentCard) {
 
   // Grabs the data field in the HTML and displays the textcontent from the studentCard property
   clone.querySelector("[data-field=firstname]").textContent = studentCard.firstname;
-  clone.querySelector("[data-field=nickname]").textContent = studentCard.nickname;
-  clone.querySelector("[data-field=middlename]").textContent = studentCard.middlename;
-  clone.querySelector("[data-field=lastname]").textContent = studentCard.lastname;
+  // clone.querySelector("[data-field=nickname]").textContent = studentCard.nickname;
+  // clone.querySelector("[data-field=middlename]").textContent = studentCard.middlename;
+  // clone.querySelector("[data-field=lastname]").textContent = studentCard.lastname;
   clone.querySelector("[data-field=house]").textContent = studentCard.house;
-  clone.querySelector("[data-field=gender]").textContent = studentCard.gender;
+  // clone.querySelector("[data-field=gender]").textContent = studentCard.gender;
   clone.querySelector("#studentImage").src = `images/${studentCard.image}`;
 
   if (studentCard.image === ``) {
@@ -357,7 +358,7 @@ function displayStudent(studentCard) {
   });
 
   //   clone blood
-  clone.querySelector("[data-field=blood]").textContent = studentCard.blood;
+  // clone.querySelector("[data-field=blood]").textContent = studentCard.blood;
 
   // Assign prefect
   clone.querySelector("[data-field=prefect]").dataset.prefect = studentCard.prefect;
@@ -427,6 +428,8 @@ function displayStudent(studentCard) {
   }
 
   function clickPrefect() {
+    document.querySelector(".student_container [data-field=prefect]").removeEventListener("click", clickPrefect);
+
     if (studentCard.prefect === true) {
       studentCard.prefect = false;
     } else {
@@ -458,7 +461,7 @@ function makeStudentAPrefect(selectedStudent) {
   assignPrefect(selectedStudent);
   // Checks the limit for prefects in each house
   function assignPrefect(student) {
-    if (checkPrefectLimit(student.house, student.gender, student.firstname, student.lastname)) {
+    if (checkPrefectLimit(student.house, student.gender)) {
       student.prefect = true;
       // removePrefectAOrPrefectB(prefects[0], prefects[1]);
     } else {
@@ -467,15 +470,11 @@ function makeStudentAPrefect(selectedStudent) {
     }
   }
   function removeOtherPrefect(other) {
-    // if ignore - do nothing
-
     // if remove other:
     document.querySelector("#remove_other").classList.remove("hide");
     document.querySelector("#remove_other .closebutton").addEventListener("click", closeDialog);
     document.querySelector("#remove_other #removeother").addEventListener("click", clickRemoveOther);
     document.querySelector("#remove_other [data-field=otherprefect]").textContent = `${other.firstname} ${other.lastname} as prefect`;
-    // removePrefect(other);
-    // assignPrefect(selectedStudent);
 
     function closeDialog() {
       document.querySelector("#remove_other").classList.add("hide");
@@ -488,7 +487,6 @@ function makeStudentAPrefect(selectedStudent) {
       buildList();
       closeDialog();
     }
-    // Ask the user to remove or ignore the other
   }
 
   function removePrefectAOrPrefectB(prefectA, prefectB) {
@@ -613,24 +611,81 @@ function popUp(studentCard) {
   // House crests
 
   const crestImg = document.querySelector("#pop_up .crest_img");
-
+  const background = document.querySelector(".content");
   if (studentCard.house === "Gryffindor") {
     crestImg.src = "house_crests/Gryffindor.svg";
+    background.classList.add("color-gryf");
   }
   if (studentCard.house === "Slytherin") {
     crestImg.src = "house_crests/Slytherin.svg";
+    background.classList.add("color-slyt");
   }
   if (studentCard.house === "Ravenclaw") {
     crestImg.src = "house_crests/Ravenclaw.svg";
+    background.classList.add("color-rave");
   }
   if (studentCard.house === "Hufflepuff") {
     crestImg.src = "house_crests/Huffelpuff.svg";
+    background.classList.add("color-huff");
   }
 
   if (studentCard.middlename === `N/a`) {
     popup.querySelector("[data-field=fullname]").textContent = `${studentCard.firstname} ${studentCard.lastname}`;
   } else {
     popup.querySelector("[data-field=fullname]").textContent = `${studentCard.firstname} ${studentCard.middlename} ${studentCard.lastname}`;
+  }
+
+  // expelling from pop up
+  popup.querySelector("[data-field=expelled]").addEventListener("click", function () {
+    const expelBtn = popup.querySelector("#expel_btn");
+    if (studentCard.expelled === false) {
+      expelBtn.textContent = "Expelled";
+      expelStudent();
+      expelBtn.classList.add("expelBtn");
+    }
+
+    function expelStudent() {
+      moveToExpelled(studentCard);
+      // updateCounters(currentList);
+    }
+  });
+
+  // assigning to prefect from popup
+
+  const prefectBtn = popup.querySelector("#prefect_btn");
+
+  if (studentCard.prefect === true) {
+    prefectBtn.textContent = "Prefect";
+    prefectBtn.classList.add("prefectBtn");
+  } else {
+    prefectBtn.textContent = "Make prefect";
+    prefectBtn.classList.remove("prefectBtn");
+    buildList();
+    popup.querySelector("#prefect_btn").addEventListener("click", function () {
+      makeStudentAPrefect(studentCard);
+      if (studentCard.prefect === true) {
+        prefectBtn.textContent = "Prefect";
+        prefectBtn.classList.add("prefectBtn");
+      }
+      buildList();
+    });
+  }
+
+  // assigning to squad from popup
+  const squadBtn = popup.querySelector("#squad_btn");
+
+  if (studentCard.iqSquad === true) {
+    squadBtn.textContent = "Squad-member";
+    squadBtn.classList.add("squadBtn");
+  } else {
+    squadBtn.textContent = "Join Squad";
+    squadBtn.classList.remove("squadBtn");
+    popup.querySelector("#squad_btn").addEventListener("click", function () {
+      squadBtn.textContent = "Squad-member";
+      squadBtn.classList.add("squadBtn");
+
+      buildList();
+    });
   }
 
   // closing
@@ -640,7 +695,62 @@ function popUp(studentCard) {
     document.querySelector("#pop_up").classList.add("hide");
     document.querySelector("main").classList.remove("blur");
     document.querySelector("#pop_up .close").removeEventListener("click", closePopUp);
+    buildList();
   }
 }
 
 // HACKING ------------------------------------------------------------------------->
+const dobbyBtn = document.getElementById("dobby_hack");
+
+setTimeout(() => {
+  dobbyBtn.classList.remove("hide");
+  dobbyBtn.classList.add("fly_animate");
+  dobbyBtn.addEventListener("click", hackTheSystem);
+}, 1000);
+
+function hackTheSystem() {
+  console.log("hackTheSystem");
+  dobbyBtn.classList.remove("fly_animate");
+  if (systemHacked) {
+    console.log("The system has been hacked");
+  } else {
+    setTimeout(hackStudentList, 2500);
+    function hackStudentList() {
+      document.querySelector("h1").textContent = "I solemnly swear I am up to NO good!";
+      document.querySelector("*").classList.add("invert");
+      dobbyBtn.removeEventListener("click");
+    }
+    hackBlood();
+    const hacker = createHacker();
+    allStudents.push(hacker);
+    buildList();
+  }
+}
+
+function createHacker() {
+  const hacker = Object.create(allStudents);
+  hacker.firstname = "Felicia";
+  hacker.lastname = "Hetman";
+  hacker.middlename = "Eliza";
+  hacker.nickname = `"Hacker"`;
+  hacker.gender = "girl";
+  hacker.image = "felicia_hacker.png";
+  hacker.house = "Owner of Hogwarts";
+  hacker.blood = "Pure";
+  hacker.hacker = true;
+
+  return hacker;
+}
+
+function hackBlood() {
+  allStudents.forEach((student) => {
+    const randomNumber = Math.floor(Math.random() * 3);
+    const randomBloodArr = ["muggle", "half", "pure"];
+
+    if (student.blood === "half" || student.blood === "muggle") {
+      student.blood = "pure";
+    } else if (student.blood === "pure") {
+      student.blood = randomBloodArr[randomNumber];
+    }
+  });
+}

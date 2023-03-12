@@ -38,11 +38,13 @@ nav,
 .counter_container {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .navigation {
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .counter_div,
@@ -174,4 +176,102 @@ td[data-field="prefect"][data-prefect="false"]::after {
 
 .student_img_pop {
   display: flex;
+}
+
+.expelBtn {
+  background-color: red;
+}
+.prefectBtn {
+  background-color: yellow;
+}
+.squadBtn {
+  background-color: green;
+}
+
+.color-gryf {
+  background-color: #912e2e;
+}
+.color-rave {
+  background-color: #ae72ea;
+}
+.color-huff {
+  background-color: #ffff88;
+}
+.color-slyt {
+  background-color: #537b51;
+}
+
+#remove_aorb {
+  display: none;
+}
+
+#remove_aorb .close_dialog {
+  align-self: flex-end;
+  width: 10%;
+  margin-bottom: 1rem;
+}
+
+#remove_aorb.show {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#dobby_hack img {
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 999;
+  cursor: pointer;
+  height: 200px;
+}
+
+/* animation */
+
+.fly_animate {
+  animation: fly 110s linear infinite;
+}
+@keyframes fly {
+  0% {
+    transform: translate(-200%, 110vh) rotateZ(0deg);
+  }
+
+  12.5% {
+    transform: translate(120vw, -120%) rotateZ(20deg);
+  }
+
+  25% {
+    transform: translate(-200%, 50vh) scale(1.75) rotateZ(-20deg);
+  }
+
+  37.5% {
+    transform: translate(-200%, -120%) rotateZ(-40deg);
+  }
+
+  50% {
+    transform: translate(100vw, 50vh) rotateZ(0deg);
+  }
+
+  /* 62.5% {
+    transform: translate(20vw, 100vh) rotateZ(20deg);
+  } */
+  75% {
+    transform: translate(200%, 100vh) rotateZ(20deg);
+  }
+  /* 87.5% {
+    transform: translate(50vw, -200%) scale(1.75) rotateZ(20deg);
+  } */
+
+  100% {
+    transform: translate(-200%, 110vh) rotateZ(0deg);
+  }
+}
+
+
+.invert{
+  filter: invert(1);
 }
