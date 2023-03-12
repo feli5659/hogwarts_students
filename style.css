@@ -244,37 +244,37 @@ td[data-field="prefect"][data-prefect="false"]::after {
 }
 @keyframes fly {
   0% {
-    transform: translate(-200%, 110vh) rotateZ(0deg);
+    transform: translate(-20%, 110vh) rotateZ(0deg);
   }
 
   12.5% {
-    transform: translate(120vw, -120%) rotateZ(20deg);
+    transform: translate(120vw, -80%) rotateZ(20deg);
   }
 
   25% {
-    transform: translate(-200%, 50vh) scale(1.75) rotateZ(-20deg);
+    transform: translate(-100%, 50vh) scale(1.75) rotateZ(-20deg);
   }
 
   37.5% {
-    transform: translate(-200%, -120%) rotateZ(-40deg);
+    transform: translate(-100%, -80%) rotateZ(-40deg);
   }
 
   50% {
     transform: translate(100vw, 50vh) rotateZ(0deg);
   }
 
-  /* 62.5% {
+  62.5% {
     transform: translate(20vw, 100vh) rotateZ(20deg);
-  } */
-  75% {
-    transform: translate(200%, 100vh) rotateZ(20deg);
   }
-  /* 87.5% {
-    transform: translate(50vw, -200%) scale(1.75) rotateZ(20deg);
-  } */
+  75% {
+    transform: translate(100%, 100vh) rotateZ(20deg);
+  }
+  87.5% {
+    transform: translate(50vw, -100%) scale(1.75) rotateZ(20deg);
+  }
 
   100% {
-    transform: translate(-200%, 110vh) rotateZ(0deg);
+    transform: translate(-100%, 110vh) rotateZ(0deg);
   }
 }
 

@@ -8,8 +8,6 @@ let allStudents = [];
 let expelledStudents = [];
 let allStudentsCopy = [];
 
-let systemHacked = false;
-
 // counter variables
 let allStudentsCounter = 0;
 let expelledStudentsCounter = 0;
@@ -20,11 +18,6 @@ const expelledStudentsCounterElement = document.querySelector("#count-expelled-s
 const displayedStudentsCounterElement = document.querySelector("#count-displayed-students");
 
 document.addEventListener("DOMContentLoaded", loadPage);
-// window.addEventListener("keydown", getHackPassword);
-
-// is the system hacked
-let isHacked = false;
-let keySaved = "";
 
 const Student = {
   firstname: "",
@@ -62,39 +55,20 @@ function toggleStudents() {
     toggleButton.textContent = "Show all students";
   }
 }
-// Controls the filter functions
-const filterFunctions = {
-  gryffindor: (studentCard) => studentCard.house === "Gryffindor",
-  hufflepuff: (studentCard) => studentCard.house === "Hufflepuff",
-  ravenclaw: (studentCard) => studentCard.house === "Ravenclaw",
-  slytherin: (studentCard) => studentCard.house === "Slytherin",
-  prefect: (studentCard) => studentCard.prefect === true,
-  iqsquad: (studentCard) => studentCard.iqSquad === true,
-  girl: (studentCard) => studentCard.gender === "girl",
-  boy: (studentCard) => studentCard.gender === "boy",
-  pureblood: (studentCard) => studentCard.blood === "Pure-Blood",
-  halfblood: (studentCard) => studentCard.blood === "Half-Blood",
-  muggleborn: (studentCard) => studentCard.blood === "Muggle-Born",
-};
-
-// controls the sorting and filter settings
 
 // Loads the page
 function loadPage() {
   console.log("Page loaded");
-  registerButtons();
 
-  loadJSON(studentDataUrl);
-}
-// Gives eventlisteners on all the buttons
-function registerButtons() {
+  // Gives eventlisteners on all the buttons
+
   document.getElementById("search-button").addEventListener("click", searchStudents);
   document.getElementById("reset-button").addEventListener("click", resetStudents);
   document.getElementById("togglebutton").addEventListener("click", toggleStudents);
   document.querySelectorAll("[data-action='filter']").forEach((button) => button.addEventListener("click", selectFilter));
   document.querySelectorAll("[data-action='sort']").forEach((button) => button.addEventListener("click", selectSort));
 
-  //   console.log("buttons ready");
+  loadJSON(studentDataUrl);
 }
 
 // Loads the Json and prepares the data for the following functions---------------------------
@@ -119,9 +93,6 @@ function prepareObject(jsonObject) {
   // Creates a const with the name student card that contains all the information from the Object
   const studentCard = Object.create(Student);
 
-  // gives students an ID to count
-  // studentCard.studentId = i + 1;
-
   // Trims the fullName string
   let fullnameTrim = jsonObject.fullname.trim().split(" ");
 
@@ -136,80 +107,6 @@ function prepareObject(jsonObject) {
 
   return studentCard;
 }
-
-function selectFilter(event) {
-  const filter = event.target.dataset.filter;
-  console.log(`selectFilter() User selected ${filter}`);
-
-  setFilter(filter);
-}
-
-function setFilter(filter) {
-  settings.filterBy = filter;
-  console.log("setFilter() is running");
-  buildList();
-}
-
-function selectSort(event) {
-  const sortBy = event.target.dataset.sort;
-  const sortDir = event.target.dataset.sortDirection;
-  console.log(`user selected ${settings.sortBy} - ${sortDir}`);
-
-  // find old sortby element and remove .sortby
-  const oldElement = document.querySelector(`[data-sort= '${settings.sortBy}']`);
-  //   console.log("This is sortBy " + sortBy);
-  oldElement.classList.remove("sortby");
-
-  // indicate selected sorting direction
-  event.target.classList.add("sortby");
-
-  // toggle the direction
-  if (sortDir === "asc") {
-    event.target.dataset.sortDirection = "desc";
-  } else {
-    event.target.dataset.sortDirection = "asc";
-  }
-
-  setSort(sortBy, sortDir);
-}
-
-function setSort(sortBy, sortDir) {
-  settings.sortBy = sortBy;
-  settings.sortDir = sortDir;
-  buildList();
-}
-function sortList(sortedList) {
-  let direction = 1;
-  if (settings.sortDir === "desc") {
-    direction = -1;
-  } else {
-    settings.direction = 1;
-  }
-  sortedList = sortedList.sort(sortByProperty);
-
-  // this is a compare function - a function that takes two arguments and then compares them
-
-  function sortByProperty(studentA, studentB) {
-    if (studentA[settings.sortBy] < studentB[settings.sortBy]) {
-      return -1 * direction;
-    } else {
-      return 1 * direction;
-    }
-  }
-  return sortedList;
-}
-
-function filterList(filteredList) {
-  const filterFunction = filterFunctions[settings.filterBy];
-  if (filterFunction) {
-    console.log(settings.filterBy);
-    filteredList = allStudents.filter(filterFunction);
-  } else {
-    filteredList = allStudents;
-  }
-  return filteredList;
-}
-
 // Gets the firstname
 function getFirstname(studentName) {
   return `${studentName[0].charAt(0).toUpperCase()}${studentName[0].slice(1).toLowerCase()}`;
@@ -285,7 +182,99 @@ function getStudentGender(person) {
   return genderTrim;
 }
 
-// Search function
+// FILTERING ------------------------------------->
+// Controls the filter functions
+const filterFunctions = {
+  gryffindor: (studentCard) => studentCard.house === "Gryffindor",
+  hufflepuff: (studentCard) => studentCard.house === "Hufflepuff",
+  ravenclaw: (studentCard) => studentCard.house === "Ravenclaw",
+  slytherin: (studentCard) => studentCard.house === "Slytherin",
+  prefect: (studentCard) => studentCard.prefect === true,
+  iqsquad: (studentCard) => studentCard.iqSquad === true,
+  girl: (studentCard) => studentCard.gender === "girl",
+  boy: (studentCard) => studentCard.gender === "boy",
+  pureblood: (studentCard) => studentCard.blood === "Pure-Blood",
+  halfblood: (studentCard) => studentCard.blood === "Half-Blood",
+  muggleborn: (studentCard) => studentCard.blood === "Muggle-Born",
+};
+
+function selectFilter(event) {
+  const filter = event.target.dataset.filter;
+  console.log(`selectFilter() User selected ${filter}`);
+
+  setFilter(filter);
+}
+
+function setFilter(filter) {
+  settings.filterBy = filter;
+  console.log("setFilter() is running");
+  buildList();
+}
+
+function filterList(filteredList) {
+  const filterFunction = filterFunctions[settings.filterBy];
+  if (filterFunction) {
+    console.log(settings.filterBy);
+    filteredList = allStudents.filter(filterFunction);
+  } else {
+    filteredList = allStudents;
+  }
+  return filteredList;
+}
+
+// SORTING ------------------------------------->
+
+function selectSort(event) {
+  const sortBy = event.target.dataset.sort;
+  const sortDir = event.target.dataset.sortDirection;
+  console.log(`user selected ${settings.sortBy} - ${sortDir}`);
+
+  // find old sortby element and remove .sortby
+  const oldElement = document.querySelector(`[data-sort= '${settings.sortBy}']`);
+  //   console.log("This is sortBy " + sortBy);
+  oldElement.classList.remove("sortby");
+
+  // indicate selected sorting direction
+  event.target.classList.add("sortby");
+
+  // toggle the direction
+  if (sortDir === "asc") {
+    event.target.dataset.sortDirection = "desc";
+  } else {
+    event.target.dataset.sortDirection = "asc";
+  }
+
+  setSort(sortBy, sortDir);
+}
+
+function setSort(sortBy, sortDir) {
+  settings.sortBy = sortBy;
+  settings.sortDir = sortDir;
+  buildList();
+}
+function sortList(sortedList) {
+  let direction = 1;
+  if (settings.sortDir === "desc") {
+    direction = -1;
+  } else {
+    settings.direction = 1;
+  }
+  sortedList = sortedList.sort(sortByProperty);
+
+  // this is a compare function - a function that takes two arguments and then compares them
+
+  function sortByProperty(studentA, studentB) {
+    if (studentA[settings.sortBy] < studentB[settings.sortBy]) {
+      return -1 * direction;
+    } else {
+      return 1 * direction;
+    }
+  }
+  return sortedList;
+}
+
+// SEARCHING ------------------------------------->
+
 function searchStudents() {
   // allStudentsCopy hold a copy of allStudents array.
   // Function checks if the copy is empty. If it is a copy is created
@@ -310,6 +299,7 @@ function resetStudents() {
   allStudents = [...allStudentsCopy]; // restore the original unfiltered array
   buildList();
 }
+
 // Build the list of students whenever the user filter or sorts. This is the center of the script
 function buildList() {
   displayedStudentsCounter = 0;
@@ -321,16 +311,11 @@ function buildList() {
   updateCounters(currentList);
 }
 
-// Clears the html and displays the list-----------------------------------
 function displayList(allStudents) {
-  // Grabs the id="list" and the tbody element from the HTML and empties the content
+  // empties the content
   document.querySelector("#list tbody").innerHTML = "";
 
-  // count students
-  // const studentCounted = studentCounter(students);
-  // displayCount(studentCounted);
-
-  //  Runs the displayStudent functions for each of the data entries in the Json file
+  //  Calls the displayStudent functions for each student
   allStudents.forEach(displayStudent);
 }
 
@@ -341,11 +326,8 @@ function displayStudent(studentCard) {
 
   // Grabs the data field in the HTML and displays the textcontent from the studentCard property
   clone.querySelector("[data-field=firstname]").textContent = studentCard.firstname;
-  // clone.querySelector("[data-field=nickname]").textContent = studentCard.nickname;
-  // clone.querySelector("[data-field=middlename]").textContent = studentCard.middlename;
-  // clone.querySelector("[data-field=lastname]").textContent = studentCard.lastname;
+  clone.querySelector("[data-field=lastname]").textContent = studentCard.lastname;
   clone.querySelector("[data-field=house]").textContent = studentCard.house;
-  // clone.querySelector("[data-field=gender]").textContent = studentCard.gender;
   clone.querySelector("#studentImage").src = `images/${studentCard.image}`;
 
   if (studentCard.image === ``) {
@@ -394,6 +376,8 @@ function displayStudent(studentCard) {
     }
   });
 
+  // inqsquad function.
+
   clone.querySelector("[data-field=iqsquad]").addEventListener("click", clickIqSquad);
 
   if (studentCard.iqSquad === true) {
@@ -441,7 +425,6 @@ function displayStudent(studentCard) {
 }
 
 function checkStudentHouse(student) {
-  console.log(student.house);
   return student.house === "Slytherin";
 }
 // Check the house and gender of the selected prefect and returns the value
@@ -463,9 +446,7 @@ function makeStudentAPrefect(selectedStudent) {
   function assignPrefect(student) {
     if (checkPrefectLimit(student.house, student.gender)) {
       student.prefect = true;
-      // removePrefectAOrPrefectB(prefects[0], prefects[1]);
     } else {
-      // removePrefectAOrPrefectB(prefects[0], prefects[1]);
       removeOtherPrefect(other);
     }
   }
@@ -489,39 +470,6 @@ function makeStudentAPrefect(selectedStudent) {
     }
   }
 
-  function removePrefectAOrPrefectB(prefectA, prefectB) {
-    document.querySelector("#remove_aorb").classList.remove("hide");
-    document.querySelector("#remove_aorb .closebutton").addEventListener("click", closeDialog);
-    document.querySelector("#remove_aorb #removea").addEventListener("click", clickRemoveA);
-    document.querySelector("#remove_aorb #removeb").addEventListener("click", clickRemoveB);
-
-    // Show names on buttons
-    document.querySelector("#remove_aorb [data-field=winnerA]").textContent = winnerA.name;
-    document.querySelector("#remove_aorb [data-field=winnerB]").textContent = winnerB.name;
-
-    // if ignore - do nothing
-    function closeDialog() {
-      document.querySelector("#remove_aorb").classList.add("hide");
-      document.querySelector("#remove_aorb .closebutton").removeEventListener("click", closeDialog);
-      document.querySelector("#remove_aorb #removea").removeEventListener("click", clickRemoveA);
-      document.querySelector("#remove_aorb #removeb").removeEventListener("click", clickRemoveB);
-    }
-    // if removeA
-    function clickRemoveA() {
-      removePrefect(prefectA);
-      assignPrefect(selectedStudent);
-      buildList();
-      closeDialog();
-    }
-
-    // else - if removeB
-    function clickRemoveB() {
-      removePrefect(prefectB);
-      assignPrefect(selectedStudent);
-      buildList();
-      closeDialog();
-    }
-  }
   function removePrefect(studentCard) {
     studentCard.prefect = false;
   }
@@ -566,7 +514,7 @@ function updateCounters(currentList) {
 }
 
 // Counting all the students, their houses, displayed and expelled
-function studentCounter(students) {
+function studentCounter() {
   const countStudents = {
     Gryffindor: 0,
     Hufflepuff: 0,
@@ -706,25 +654,24 @@ setTimeout(() => {
   dobbyBtn.classList.remove("hide");
   dobbyBtn.classList.add("fly_animate");
   dobbyBtn.addEventListener("click", hackTheSystem);
-}, 1000);
+}, 100);
 
 function hackTheSystem() {
   console.log("hackTheSystem");
   dobbyBtn.classList.remove("fly_animate");
-  if (systemHacked) {
-    console.log("The system has been hacked");
-  } else {
-    setTimeout(hackStudentList, 2500);
-    function hackStudentList() {
-      document.querySelector("h1").textContent = "I solemnly swear I am up to NO good!";
-      document.querySelector("*").classList.add("invert");
-      dobbyBtn.removeEventListener("click");
-    }
-    hackBlood();
-    const hacker = createHacker();
-    allStudents.push(hacker);
-    buildList();
-  }
+
+  setTimeout(hackStudentList, 2500);
+
+  hackBlood();
+  const hacker = createHacker();
+  allStudents.push(hacker);
+  buildList();
+}
+
+function hackStudentList() {
+  document.querySelector("h1").textContent = "I solemnly swear I am up to NO good!";
+  document.querySelector("*").classList.add("invert");
+  dobbyBtn.removeEventListener("click", hackTheSystem);
 }
 
 function createHacker() {
